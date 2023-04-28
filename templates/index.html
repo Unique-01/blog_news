@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}
+SuperBlog -kjkg df jksj kfj ks
+{% endblock title %}
+{% block content %}
+
+{% for post in post_list %}
+{% include "posts.html" %}
+{% endfor %}
+<form action="{% url 'search' %}" method="get">
+    <input name='q' type="text"/>
+    <button type="submit">Search</button>
+</form>
+<!-- <div id="post-list">
+    <div class="infinite-container">
+{% for post in post_list %}
+<div class="infinite-item">
+    <h3><a href="{{post.slug}}">{{ post.title }}</a></h3>
+    {{ post.content|safe|truncatewords:20 }}
+    {{post.created}}
+    {% comment %} {% if post.image %}<img src="{{ post.image.url }}" alt="{{ post.title|slice:5 }}" heigth="100" width="100" />{% endif %} {% endcomment %}
+    <hr />
+</div>
+{% endfor %}
+</div> -->
+<!-- <div class="loading" style="display: none;">
+    Loading...
+  </div>
+  {% if page_obj.has_next %}
+    <a class="infinite-more-link" href="?page={{ articles.next_page_number }}">More</a>
+  {% endif %} -->
+<!-- {% if page_obj.has_next %}<button id="load-more-button">Load More</button>{% endif %} -->
+<!-- {% if posts.has_next %}
+    <button id="load-more-button" data-next-page-url="{{ posts.next_page_number }}">Load More</button>
+  {% endif %} -->
+{% endblock content %}
+{% block extra_js %}
+<!-- <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script> -->
+<!-- <script>
+    $(function () {
+        var pageNum = 2; // start with page 2 because page 1 is already displayed
+
+        $('#load-more-button').on('click', function () {
+            $.ajax({
+                url: '?page=' + pageNum,
+                success: function (data) {
+                    if ($.trim(data)) {
+                        $('#post-list').append(data);
+                        pageNum++;
+                    } else {
+                        $('#load-more-button').hide();
+                    }
+                }
+            });
+        });
+    });
+</script> -->
+<!-- <script>
+    $(function () {
+        $('#load-more-button').on('click', function () {
+            var nextPageUrl = $(this).data('next-page-url');
+            $.ajax({
+                url:'?page=' + nextPageUrl,
+                success: function (data) {
+                    $('#post-list').append(data);
+                    $('#load-more-button').data('next-page-url', $(data).filter('#load-more-button').data('next-page-url'));
+                    if (!$('#load-more-button').data('next-page-url')) {
+                        $('#load-more-button').hide();
+                    }
+                }
+            });
+        });
+    });
+  </script> -->
+{% endblock extra_js %}

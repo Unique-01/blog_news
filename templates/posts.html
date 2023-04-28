@@ -1,0 +1,4 @@
+<h3><a href="{% url 'post_detail' id=post.id slug=post.slug %}">{{post.title}}</a></h3>
+<p>{{post.content|safe|truncatewords:"10"}}</p>
+<small>by {{post.author}}</small>
+<small>{{post.updated}}</small>

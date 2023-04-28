@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}{{q}}{% endblock title %}
+{% block content %}
+    {% for post in search_result %}
+        {% include posts.html %}
+    {% endfor %}
+{% endblock content %}
