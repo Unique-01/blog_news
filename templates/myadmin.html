@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% block title %}Admin Panel{% endblock title %}
+{% block title %}
+    Admin Panel
+{% endblock title %}
 {% block content %}
-{% for post in posts %}
-{{post.title}}
-{{post.content|safe}}
-
-<hr/>
-{% endfor %}
-
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.media}}
-    {{form|crispy}}
-    <button type="submit">Upload</button>
-</form>
+    {% for post in posts %}
+        {% include "posts.html" %}
+    {% endfor %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form|crispy }}
+        <button type="submit">Upload</button>
+    </form>
 {% endblock content %}

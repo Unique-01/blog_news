@@ -1,4 +1,26 @@
-<h3>{{post.title}}</h3>
-<p>{{post.content|safe}}</p>
-<small>by {{post.author}}</small>
-<small>{{post.updated}}</small>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    {{ post.title }}
+{% endblock title %}
+{% block content %}
+    <article>
+        {{ comment.count }}
+        <h3>{{ post.title }}</h3>
+        <p>
+            {{ post.content|safe }}
+        </p>
+        <small>by {{ post.author }}</small>
+        <small>{{ post.updated }}</small>
+    </article>
+    <div>
+        <h3>Add a comment</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ comment_form|crispy }}
+            <button type="submit">Add Comment</button>
+        </form>
+    </div>
+    {{prev_post.title}}--
+    {{next_post.title}}
+{% endblock content %}
