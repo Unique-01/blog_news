@@ -19,9 +19,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">HOME</a>
+              {% url 'index' as index %}
+              <a class="nav-link {% if request.path == index %}active{% endif %}" aria-current="page" href="{{index}}">HOME</a>
               {% for category in categories %}
-              <a class="nav-link {% if  %}{% endif %}" href="{% url 'categorypost' category.name %}">{{category.name|upper}}</a>
+              {% url 'categorypost' category.name  as categorylink %}
+              <a class="nav-link {% if request.path == categorylink %}active{% endif %}" href="{{categorylink}}">{{category.name|upper}}</a>
               {% endfor %}
             </div>
           </div>
