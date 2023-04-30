@@ -6,5 +6,6 @@ urlpatterns = [
     path('myadmin/',views.myAdmin,name='myadmin'),
     path('search/',views.search,name='search'),
     path('pagination/',views.PostPagination.as_view(),name='postpagination'),
-    path('<int:id>/<slug:slug>/',views.post_detail,name='post_detail')
+    path('category/<str:name>/',views.get_category_post,name='categorypost'),
+    path('<int:id>/<slug:slug>/',views.post_detail,name='post_detail'),
 ]

@@ -4,6 +4,7 @@ from .models import *
 from .forms import *
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from .models import Category
 
 
 class HomePage(generic.ListView):
@@ -15,6 +16,10 @@ class HomePage(generic.ListView):
 class PostPagination(HomePage):
     template_name = 'postpagination.html'
 
+def get_category_post(request,name):
+    category = Category.objects.get(name=name)
+    posts = Post.objects.filter(category=category)
+    return render(request,'categorypost.html',{'posts':posts})
 
 def post_detail(request, id, slug):
     post = get_object_or_404(Post, id=id, slug=slug)
