@@ -1,11 +1,28 @@
-<article>
+<article class="col" style="width: 25rem;">
+    {% if post.image %}
+        <img src="{{ post.image.url }}"
+             class=""
+             width="400"
+             height="200"
+             alt="{{ post.title|slice:"5" }}">
+    {% endif %}
+    <div class="mt-2">
+        <small class=""><a href="{% url 'categorypost' post.category %}">{{post.category |upper}}</a></small>
     <h3>
         <a href="{% url 'post_detail' id=post.id slug=post.slug %}">{{ post.title }}</a>
     </h3>
+    <span class="text-uppercase"><small class="" >by {{ post.author }}</small>
+        <small>{{ post.updated |date }}</small></span>
     <p>
-        {{ post.content|safe|truncatewords:"10" }}
+        {{ post.content|safe|truncatechars:"100" }}
     </p>
-    <small>by {{ post.author }}</small>
-    <small>{{ post.updated }}</small> 
+    </div>
+    
 </article>
-<hr>
+{% comment %} <div class="card col" style="width: 25rem;">
+    {% if post.image %}<img src="{{post.image.url}}" class="card-img-top" alt="{{post.title|slice:"5"}}">{% endif %}
+    <div class="card-body">
+      <h5 class="card-title"><a href="{% url 'post_detail' id=post.id slug=post.slug %}">{{ post.title }}</a></h5>
+      <p class="card-text">{{ post.content|safe|truncatewords:"10" }}</p>
+    </div>
+</div> {% endcomment %}

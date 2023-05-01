@@ -3,16 +3,13 @@
     SuperBlog -kjkg df jksj kfj ks
 {% endblock title %}
 {% block content %}
-    <div>
-        <form action="{% url 'search' %}" method="get">
-            <input name='q' type="text" />
-            <button type="submit">Search</button>
-        </form>
-        <main id="post-list">
+
+    <div class="container mt-5">
+        <div id="post-list" class="row row-cols-2 gap-5">
             {% for post in post_list %}
                 {% include "posts.html" %}
             {% endfor %}
-        </main>
+        </div>
         {% if page_obj.has_next %}<button id="load-more-button">Load More</button>{% endif %}
     </div>
 {% endblock content %}

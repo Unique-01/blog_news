@@ -10,7 +10,7 @@ from .models import Category
 class HomePage(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-updated')
     template_name = 'index.html'
-    paginate_by = 5
+    paginate_by = 10
 
 
 class PostPagination(HomePage):

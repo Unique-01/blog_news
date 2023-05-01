@@ -31,6 +31,10 @@ class Post(models.Model):
         self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"id": self.id,"slug":self.slug})
+    
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='comment')
     comment = models.TextField()

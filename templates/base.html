@@ -1,38 +1,92 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}{% endblock title %}
-    </title>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Awesome blog</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              {% url 'index' as index %}
-              <a class="nav-link {% if request.path == index %}active{% endif %}" aria-current="page" href="{{index}}">HOME</a>
-              {% for category in categories %}
-              {% url 'categorypost' category.name  as categorylink %}
-              <a class="nav-link {% if request.path == categorylink %}active{% endif %}" href="{{categorylink}}">{{category.name|upper}}</a>
-              {% endfor %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet"
+              href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+              rel="stylesheet"
+              type="text/css">
+        <link href="{% static 'fontawesomefree/css/brands.css' %}"
+              rel="stylesheet"
+              type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}"
+              rel="stylesheet"
+              type="text/css">
+    </head>
+    <body>
+        <h1 class="text-center mt-4 fw-bold" href="#">PACIFIC PRINCE</h1>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+            
+            <div class="container-fluid">
+                
+                
+                <button class="navbar-toggler border-0"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    {% comment %} <span class="navbar-toggler-icon"></span> {% endcomment %}
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav gap-lg-4  mx-auto fw-bold ">
+                        {% url 'index' as index %}
+                        <a class="nav-link {% if request.path == index %}active{% endif %}"
+                           aria-current="page"
+                           href="{{ index }}">HOME</a>
+                        {% for category in categories %}
+                            {% url 'categorypost' category.name  as categorylink %}
+                            <a class="nav-link {% if request.path == categorylink %}active{% endif %}"
+                               href="{{ categorylink }}">
+                                {{ category.name|upper }}
+                            </a>
+                        {% endfor %}
+                        <button type="button"
+                                class="btn col-1 "
+                                data-bs-toggle="modal"
+                                data-bs-target="#searchModal">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
+        </nav>
+        <div class="modal fade"
+             id="searchModal"
+             tabindex="-1"
+             aria-labelledby="searchModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content  ">
+                    {% comment %} <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button> {% endcomment %}
+                    <div class="modal-body">
+                        <form action="{% url 'search' %}" method="get">
+                            <input name='q' type="text" class="form-control form-control-lg" />
+                            <div class="d-flex justify-content-end"><button type="submit" class="btn  "> <i class="fa-solid fa-magnifying-glass"></i></button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </nav>
-    {% block content %}{% endblock content %}
-    <script src="{% static 'jquery.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    {% block extra_js %}{% endblock extra_js %}
-</body>
+        {% block content %}
+        {% endblock content %}
+        <script src="{% static 'jquery.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        {% block extra_js %}
+        {% endblock extra_js %}
+    </body>
 </html>

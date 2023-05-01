@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('pagination/',views.PostPagination.as_view(),name='postpagination'),
     path('category/<str:name>/',views.get_category_post,name='categorypost'),
     path('<int:id>/<slug:slug>/',views.post_detail,name='post_detail'),
+    # path('', include('social_share.urls')),
 ]

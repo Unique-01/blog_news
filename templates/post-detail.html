@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load social_share %}
 {% block title %}
     {{ post.title }}
 {% endblock title %}
 {% block content %}
+{% post_to_facebook "{{post.title}}. Check it out!" object_or_url "Post to" %}
+{% post_to_twitter "{{post.title}}. Check it out!" object_or_url "Post to Twitter" %}
+
     <article>
         {{ comment.count }}
         <h3>{{ post.title }}</h3>
