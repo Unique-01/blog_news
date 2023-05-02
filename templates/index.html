@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block title %}
-    SuperBlog -kjkg df jksj kfj ks
+SuperBlog -kjkg df jksj kfj ks
 {% endblock title %}
 {% block content %}
 
-    <div class="container mt-5">
-        <div id="post-list" class="row row-cols-2 gap-5">
-            {% for post in post_list %}
-                {% include "posts.html" %}
-            {% endfor %}
-        </div>
-        {% if page_obj.has_next %}<button id="load-more-button">Load More</button>{% endif %}
+<div class="  mt-5">
+    <div id="post-list" class="row  gap-5">
+        {% for post in post_list %}
+        {% include "posts.html" %}
+        {% endfor %}
     </div>
+    {% if page_obj.has_next %}<button id="load-more-button">Load More</button>{% endif %}
+</div>
 {% endblock content %}
 {% block extra_js %}
-    <script>
+<script>
     $(function () {
         var pageNum = 2; // start with page 2 because page 1 is already displayed
 
@@ -32,5 +32,5 @@
             });
         });
     });
-    </script>
+</script>
 {% endblock extra_js %}
