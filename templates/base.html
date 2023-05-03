@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -51,6 +52,12 @@
                                 {{ category.name|upper }}
                             </a>
                         {% endfor %}
+                        {% if user.is_superuser %}<button type="button"
+                        class="btn col-2 nav-link "
+                        data-bs-toggle="modal"
+                        data-bs-target="#formModal">
+                    CREATE POST
+                </button>{% endif %}
                         <button type="button"
                                 class="btn col-1 "
                                 data-bs-toggle="modal"
@@ -81,7 +88,28 @@
                 </div>
             </div>
         </div>
-        <div class="container ">
+        <div class="modal fade"
+             id="formModal"
+             tabindex="-1"
+             aria-labelledby="formModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content  ">
+                    {% comment %} <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button> {% endcomment %}
+                    <div class="modal-body">
+                        <form action="{% url 'search' %}" method="get">
+                            {% csrf_token %}
+                            {{post_form|crispy}}
+                            <button type="submit" class="btn">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
             {% block content %}
         {% endblock content %}
         </div>

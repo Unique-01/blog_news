@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
+from django.shortcuts import reverse
 
 STATUS = (
     (0,'Draft'),

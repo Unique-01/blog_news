@@ -4,11 +4,16 @@
              class=""
              width="400"
              height="250"
+             id="myImg{{ post.id }}"
              alt="{{ post.title|slice:"5" }}">
     {% endif %}
     <div class="mt-2">
         <small class="">
             <a href="{% url 'categorypost' post.category %}">{{ post.category |upper }}</a>
+            {% if post.author == request.user %}
+                <a href="{% url 'post_update' post.slug %}" class="btn">Update</a>
+                <a href="{% url 'post_delete' post.slug %}" class="btn">delete</a>
+            {% endif %}
         </small>
         <h3>
             <a href="{% url 'post_detail' id=post.id slug=post.slug %}">{{ post.title }}</a>
@@ -16,14 +21,117 @@
         <span class="text-uppercase"><small class="">by {{ post.author }}</small>
         <small>{{ post.updated |date }}</small></span>
         <p>
-            {{ post.content|safe|truncatechars:"100" }}
+            {{ post.content|safe|truncatechars_html:"100" }}
         </p>
     </div>
 </article>
-{% comment %} <div class="card col" style="width: 25rem;">
-    {% if post.image %}<img src="{{post.image.url}}" class="card-img-top" alt="{{post.title|slice:"5"}}">{% endif %}
-    <div class="card-body">
-      <h5 class="card-title"><a href="{% url 'post_detail' id=post.id slug=post.slug %}">{{ post.title }}</a></h5>
-      <p class="card-text">{{ post.content|safe|truncatewords:"10" }}</p>
-    </div>
-</div> {% endcomment %}
+<!-- The Modal -->
+<div id="myModal" class="imgmodal">
+    <!-- The Close Button -->
+    <span class="close">&times;</span>
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+</div>
+<style>
+    /* Style the Image Used to Trigger the Modal */
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.imgmodal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+</style>
+<script>
+    // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("myImg{{post.id}}");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+</script>

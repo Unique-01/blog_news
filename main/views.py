@@ -80,3 +80,14 @@ def myAdmin(request):
             return redirect('myadmin')
     context = {'posts': posts, 'form': form}
     return render(request, 'myadmin.html', context)
+
+
+class PostUpdate(generic.UpdateView):
+    model = Post
+    template_name = "post_update.html"
+    form_class = PostForm
+    
+
+class PostDelete(generic.DeleteView):
+    model =Post
+    template_name = 'post_delete.html'
