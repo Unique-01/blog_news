@@ -25,10 +25,7 @@
     <body>
         <h1 class="text-center mt-4 fw-bold" href="#">PACIFIC PRINCE</h1>
         <nav class="navbar navbar-expand-lg bg-body-tertiary ">
-            
             <div class="container-fluid">
-                
-                
                 <button class="navbar-toggler border-0"
                         type="button"
                         data-bs-toggle="collapse"
@@ -36,12 +33,13 @@
                         aria-controls="navbarNavAltMarkup"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-bars"></i>
                     {% comment %} <span class="navbar-toggler-icon"></span> {% endcomment %}
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav gap-lg-4  mx-auto fw-bold ">
                         {% url 'index' as index %}
+                        {% url 'myadmin' as myadmin %}
                         <a class="nav-link {% if request.path == index %}active{% endif %}"
                            aria-current="page"
                            href="{{ index }}">HOME</a>
@@ -52,12 +50,17 @@
                                 {{ category.name|upper }}
                             </a>
                         {% endfor %}
-                        {% if user.is_superuser %}<button type="button"
-                        class="btn col-2 nav-link "
-                        data-bs-toggle="modal"
-                        data-bs-target="#formModal">
-                    CREATE POST
-                </button>{% endif %}
+                        {% if user.is_superuser %}
+                            <a class="nav-link {% if request.path == myadmin %}active{% endif %}"
+                               href="{{ myadmin }}">ADMIN</a>
+                            <button type="button"
+                                    class="btn col-2 nav-link "
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#formModal">
+                                CREATE POST
+                            </button>
+                            <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
+                        {% endif %}
                         <button type="button"
                                 class="btn col-1 "
                                 data-bs-toggle="modal"
@@ -75,46 +78,45 @@
              aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content  ">
-                    {% comment %} <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button> {% endcomment %}
+                    {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
                     <div class="modal-body">
                         <form action="{% url 'search' %}" method="get">
                             <input name='q' type="text" class="form-control form-control-lg" />
-                            <div class="d-flex justify-content-end"><button type="submit" class="btn  "> <i class="fa-solid fa-magnifying-glass"></i></button></div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn  ">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-       
-        </div>
-        <div class="container">
-            {% block content %}
+    </div>
+    <div class="container">
+        {% block content %}
         {% endblock content %}
         <div class="modal fade"
-        id="formModal"
-        tabindex="-1"
-        aria-labelledby="formModalLabel"
-        aria-hidden="true">
-       <div class="modal-dialog modal-lg">
-           <div class="modal-content  ">
-               {% comment %} <button type="button"
-                       class="btn-close"
-                       data-bs-dismiss="modal"
-                       aria-label="Close"></button> {% endcomment %}
-               <div class="modal-body">
-                   <form action="{% url 'myadmin' %}" method="post" enctype="multipart/form-data">
-                       {% csrf_token %}
-                       <div id="image-preview"></div>
-                       {{post_form.media}}
-                       {{post_form|crispy}}
-                       <button type="submit" class="btn">Upload</button>
-                   </form>
-               </div>
-           </div>
-       </div>
+             id="formModal"
+             tabindex="-1"
+             aria-labelledby="formModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content  ">
+                    {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+                    <div class="modal-body">
+                        <form action="{% url 'myadmin' %}"
+                              method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div id="image-preview"></div>
+                            {{ post_form.media }}
+                            {{ post_form|crispy }}
+                            <button type="submit" class="btn">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <script src="{% static 'jquery.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
