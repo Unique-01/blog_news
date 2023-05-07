@@ -85,7 +85,7 @@ def myAdmin(request):
 class PostUpdate(generic.UpdateView):
     model = Post
     template_name = "post_update.html"
-    form_class = PostForm
+    form_class = PostUpdateForm
     
 
 class PostDelete(generic.DeleteView):

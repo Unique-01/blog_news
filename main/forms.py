@@ -12,6 +12,9 @@ class PostForm(forms.ModelForm):
             'content': CKEditorWidget(),
         }
 
+class PostUpdateForm(PostForm):
+    content = forms.CharField(widget=CKEditorWidget(attrs={'id':'content_update'}))
+        
 
 class CommentForm(forms.ModelForm):
 

@@ -5,12 +5,15 @@
 {% endblock title %}
 {% block content %}
     {% for post in posts %}
-        {% include "posts.html" %}
+        {% comment %} {% include "posts.html" %} {% endcomment %}
+        {% if post.status == 0 %}
+            {% include "posts.html" %}
+        {% endif %}
     {% endfor %}
-    <form action="" method="post" enctype="multipart/form-data">
+    {% comment %} <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}
         {{ form|crispy }}
         <button type="submit">Upload</button>
-    </form>
+    </form> {% endcomment %}
 {% endblock content %}
