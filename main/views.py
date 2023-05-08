@@ -5,6 +5,7 @@ from .forms import *
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .models import Category
+from django.contrib import messages
 
 
 class HomePage(generic.ListView):
@@ -71,14 +72,24 @@ def search(request):
 def myAdmin(request):
     posts = Post.objects.all().order_by('-updated')
     form = PostForm()
+    categoryform = CategoryForm()
+    category = Category.objects.all()
     if request.method == 'POST':
+        categoryform = CategoryForm(request.POST)
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.author = request.user
             new_form.save()
+            messages.success(request, "Post has been added successfully")
             return redirect('myadmin')
-    context = {'posts': posts, 'form': form}
+
+        if categoryform.is_valid():
+            categoryform.save()
+            messages.success(request, "category has been added successfully")
+            return redirect('myadmin')
+
+    context = {'posts': posts, 'form': form,'categoryform':categoryform,'category':category}
     return render(request, 'myadmin.html', context)
 
 

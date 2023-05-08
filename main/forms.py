@@ -1,6 +1,6 @@
 from django import forms
 from ckeditor.widgets import CKEditorWidget
-from .models import Post, Comment
+from .models import Post, Comment,Category
 
 
 class PostForm(forms.ModelForm):
@@ -15,6 +15,12 @@ class PostForm(forms.ModelForm):
 class PostUpdateForm(PostForm):
     content = forms.CharField(widget=CKEditorWidget(attrs={'id':'content_update'}))
         
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
 
 class CommentForm(forms.ModelForm):
 

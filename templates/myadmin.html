@@ -6,7 +6,7 @@
 {% block content %}
     {% for post in posts %}
         {% comment %} {% include "posts.html" %} {% endcomment %}
-        {% if post.status == 0 %}
+        {% if post.status == 1 %}
             {% include "posts.html" %}
         {% endif %}
     {% endfor %}

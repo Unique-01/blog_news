@@ -54,10 +54,14 @@
                             <a class="nav-link {% if request.path == myadmin %}active{% endif %}"
                                href="{{ myadmin }}">ADMIN</a>
                             <button type="button"
-                                    class="btn col-2 nav-link "
+                                    class="btn  nav-link "
                                     data-bs-toggle="modal"
-                                    data-bs-target="#formModal">
-                                CREATE POST
+                                    data-bs-target="#formModal">CREATE POST</button>
+                            <button type="button"
+                                    class="btn nav-link "
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#categoryFormModal">
+                                CREATE CATEGORY
                             </button>
                             <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
                         {% endif %}
@@ -96,28 +100,59 @@
     <div class="container">
         {% block content %}
         {% endblock content %}
+        
+        {% for post in post %}
+            
+        {% endfor %}
+            
+        {% if user.is_superuser %}
+        
+        {% if request.path != post_update  %}
         <div class="modal fade"
-             id="formModal"
-             tabindex="-1"
-             aria-labelledby="formModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content  ">
-                    {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
-                    <div class="modal-body">
-                        <form action="{% url 'myadmin' %}"
-                              method="post"
-                              enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div id="image-preview"></div>
-                            {{ post_form.media }}
-                            {{ post_form|crispy }}
-                            <button type="submit" class="btn">Upload</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        id="formModal"
+        tabindex="-1"
+        aria-labelledby="formModalLabel"
+        aria-hidden="true">
+       <div class="modal-dialog modal-lg">
+           <div class="modal-content  ">
+               {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+               <div class="modal-body">
+                   <form action="{% url 'myadmin' %}"
+                         method="post"
+                         enctype="multipart/form-data">
+                       {% csrf_token %}
+                       <div id="image-preview" class="d-flex justify-content-center"></div>
+                       {{ post_form.media }}
+                       {{ post_form|crispy }}
+                       <button type="submit" class="btn">Upload</button>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+        {% endif %}
+            
+   <div class="modal fade"
+        id="categoryFormModal"
+        tabindex="-1"
+        aria-labelledby="categoryFormModalLabel"
+        aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+               <div class="modal-body">
+                   <form action="{% url 'myadmin' %}" method="post">
+                       {% csrf_token %}
+                       {% comment %} <input type="text"/> {% endcomment %}
+                       {{ categoryform|crispy }}
+                       <button type="submit" class="btn">Upload</button>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+        {% endif %}
+            
         <script src="{% static 'jquery.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -140,6 +175,8 @@
                 // Create a new image element
                 var image = new Image();
                 image.src = event.target.result;
+                image.height = 200
+                image.width=200
 
                 // Append the image element to the preview element
                 preview.innerHTML = '';

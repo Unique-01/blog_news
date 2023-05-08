@@ -1,9 +1,10 @@
-from main.models import Category
-from main.forms import PostForm
-def categories_processor(request):
-    categories = Category.objects.all()
-    return {'categories': categories}
+from main.models import Category,Post
+from main.forms import PostForm,CategoryForm
 
-def post_form_processor(request):
+def custom_processor(request):
+    categories = Category.objects.all()
     post_form = PostForm()
-    return {'post_form':post_form}
+    categoryform = CategoryForm()
+    general_post = Post.objects.all()
+    return {'categories': categories,'post_form':post_form,'categoryform':categoryform}
+
