@@ -21,60 +21,67 @@
         <link href="{% static 'fontawesomefree/css/solid.css' %}"
               rel="stylesheet"
               type="text/css">
+
+        <link rel="stylesheet" href="{% static 'custom/style.css' %}" type="text/css">
     </head>
     <body>
-        <h1 class="text-center mt-4 fw-bold" href="#">PACIFIC PRINCE</h1>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary ">
-            <div class="container-fluid">
-                <button class="navbar-toggler border-0"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavAltMarkup"
-                        aria-controls="navbarNavAltMarkup"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars"></i>
-                    {% comment %} <span class="navbar-toggler-icon"></span> {% endcomment %}
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav gap-lg-4  mx-auto fw-bold ">
-                        {% url 'index' as index %}
-                        {% url 'myadmin' as myadmin %}
-                        <a class="nav-link {% if request.path == index %}active{% endif %}"
-                           aria-current="page"
-                           href="{{ index }}">HOME</a>
-                        {% for category in categories %}
-                            {% url 'categorypost' category.name  as categorylink %}
-                            <a class="nav-link {% if request.path == categorylink %}active{% endif %}"
-                               href="{{ categorylink }}">
-                                {{ category.name|upper }}
-                            </a>
-                        {% endfor %}
-                        {% if user.is_superuser %}
-                            <a class="nav-link {% if request.path == myadmin %}active{% endif %}"
-                               href="{{ myadmin }}">ADMIN</a>
+        
+        <div class="sticky-top">
+            <h1 class="text-center text-light p-5 fw-bold bg-1" href="#">PACIFIC PRINCE</h1>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+                <div class="container-fluid">
+                    <button class="navbar-toggler border-0"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNavAltMarkup"
+                            aria-controls="navbarNavAltMarkup"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                        {% comment %} <span class="navbar-toggler-icon"></span> {% endcomment %}
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav gap-lg-4  mx-auto fw-bold ">
+                            {% url 'index' as index %}
+                            {% url 'myadmin' as myadmin %}
+                            <a class="nav-link {% if request.path == index %}active{% endif %}"
+                               aria-current="page"
+                               href="{{ index }}">HOME</a>
+                            {% for category in categories %}
+                                {% url 'categorypost' category.name  as categorylink %}
+                                <a class="nav-link {% if request.path == categorylink %}active{% endif %}"
+                                   href="{{ categorylink }}">
+                                    {{ category.name|upper }}
+                                </a>
+                            {% endfor %}
+                            {% if user.is_superuser %}
+                                <a class="nav-link {% if request.path == myadmin %}active{% endif %}"
+                                   href="{{ myadmin }}">ADMIN</a>
+                                {% if "/update_post" not in request.path %}
+                                    <button type="button"
+                                            class="btn  nav-link "
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#formModal">CREATE POST</button>
+                                {% endif %}
+                                <button type="button"
+                                        class="btn nav-link "
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#categoryFormModal">
+                                    CREATE CATEGORY
+                                </button>
+                                <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
+                            {% endif %}
                             <button type="button"
-                                    class="btn  nav-link "
+                                    class="btn col-1 "
                                     data-bs-toggle="modal"
-                                    data-bs-target="#formModal">CREATE POST</button>
-                            <button type="button"
-                                    class="btn nav-link "
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#categoryFormModal">
-                                CREATE CATEGORY
+                                    data-bs-target="#searchModal">
+                                <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
-                            <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
-                        {% endif %}
-                        <button type="button"
-                                class="btn col-1 "
-                                data-bs-toggle="modal"
-                                data-bs-target="#searchModal">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
         <div class="modal fade"
              id="searchModal"
              tabindex="-1"
@@ -98,67 +105,64 @@
         </div>
     </div>
     <div class="container">
-        {% block content %}
-        {% endblock content %}
-        
-        {% for post in post %}
-            
-        {% endfor %}
-            
-        {% if user.is_superuser %}
-        
-        {% if request.path != post_update  %}
-        <div class="modal fade"
-        id="formModal"
-        tabindex="-1"
-        aria-labelledby="formModalLabel"
-        aria-hidden="true">
-       <div class="modal-dialog modal-lg">
-           <div class="modal-content  ">
-               {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
-               <div class="modal-body">
-                   <form action="{% url 'myadmin' %}"
-                         method="post"
-                         enctype="multipart/form-data">
-                       {% csrf_token %}
-                       <div id="image-preview" class="d-flex justify-content-center"></div>
-                       {{ post_form.media }}
-                       {{ post_form|crispy }}
-                       <button type="submit" class="btn">Upload</button>
-                   </form>
-               </div>
-           </div>
-       </div>
-   </div>
-        {% endif %}
-            
-   <div class="modal fade"
-        id="categoryFormModal"
-        tabindex="-1"
-        aria-labelledby="categoryFormModalLabel"
-        aria-hidden="true">
-       <div class="modal-dialog">
-           <div class="modal-content">
-               {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
-               <div class="modal-body">
-                   <form action="{% url 'myadmin' %}" method="post">
-                       {% csrf_token %}
-                       {% comment %} <input type="text"/> {% endcomment %}
-                       {{ categoryform|crispy }}
-                       <button type="submit" class="btn">Upload</button>
-                   </form>
-               </div>
-           </div>
-       </div>
-   </div>
-        {% endif %}
-            
-        <script src="{% static 'jquery.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-        {% block extra_js %}
-        {% endblock extra_js %}
-        <script>
+        <div class="">
+            {% if breadcrumbs %}
+                <div class="mt-4">{% include "custom_breadcrumbs.html" with breadcrumbs=breadcrumbs %}</div>
+            {% endif %}
+            {% block content %}
+            {% endblock content %}
+            {% if user.is_superuser %}
+                {% if "/update_post" not in request.path  %}
+                    <div class="modal fade"
+                         id="formModal"
+                         tabindex="-1"
+                         aria-labelledby="formModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content  ">
+                                <div class="modal-body">
+                                    <form action="{% url 'myadmin' %}"
+                                          method="post"
+                                          enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div id="image-preview" class="d-flex justify-content-center"></div>
+                                        {{ post_form.media }}
+                                        {{ post_form|crispy }}
+                                        <button type="submit" class="btn">Upload</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="modal fade"
+                     id="categoryFormModal"
+                     tabindex="-1"
+                     aria-labelledby="categoryFormModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+                            <div class="modal-body">
+                                <form action="{% url 'myadmin' %}" method="post">
+                                    {% csrf_token %}
+                                    {% comment %} <input type="text"/> {% endcomment %}
+                                    {{ categoryform|crispy }}
+                                    <button type="submit" class="btn">Upload</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <script src="{% static 'jquery.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    {% block extra_js %}
+    {% endblock extra_js %}
+    <script>
             var input = document.getElementById('id_image');
         var preview = document.getElementById('image-preview');
 
@@ -186,6 +190,6 @@
             // Read the selected file as a data URL
             reader.readAsDataURL(file);
         });
-        </script>
-    </body>
+    </script>
+</body>
 </html>

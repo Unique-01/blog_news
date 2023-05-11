@@ -5,26 +5,49 @@
     {{ post.title }}
 {% endblock title %}
 {% block content %}
-{% post_to_facebook "{{post.title}}. Check it out!" object_or_url "Post to" %}
-{% post_to_twitter "{{post.title}}. Check it out!" object_or_url "Post to Twitter" %}
-
-    <article>
-        {{ comment.count }}
-        <h3>{{ post.title }}</h3>
-        <p>
-            {{ post.content|safe }}
-        </p>
-        <small>by {{ post.author }}</small>
-        <small>{{ post.updated }}</small>
-    </article>
-    <div>
-        <h3>Add a comment</h3>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ comment_form|crispy }}
-            <button type="submit">Add Comment</button>
-        </form>
+    {% comment %} {% post_to_facebook "{{ post.title }}. Check it out!" object_or_url "Post to" %} {% endcomment %}
+    {% comment %} {% post_to_twitter "{{ post.title }}. Check it out!" object_or_url "Post to Twitter" %} {% endcomment %}
+    <div class="col-9">
+        <article class="">
+            <a href="{% url 'categorypost' post.category %}">{{ post.category |upper }}</a>
+            <h3>{{ post.title }}</h3>
+            <div class="text-uppercase">
+                by {{ post.author }} - {{ post.updated |date }} &nbsp;&nbsp;
+                {% if post.comment.count != 0 %}
+                    {{ post.comment.count }}
+                {% else %}
+                    No
+                {% endif %}
+                comments
+            </div>
+            {% if post.image %}<img src="{{ post.image.url }}" alt="{{ post.title|slice:'10' }}">{% endif %}
+            <p>
+                {{ post.content|safe }}
+            </p>
+        </article>
+        <div class="d-flex justify-content-center">
+            <button class="btn"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#commentDiv"
+                    aria-expanded="false"
+                    aria-controls="commentDiv">
+                Add a comment
+            </button>
+        </div>
+        <div class="collapse" id="commentDiv">
+            <h3>Leave comment</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ comment_form.comment | as_crispy_field }}
+                <div class="row">
+                    <span class="col-6">{{ comment_form.name | as_crispy_field }}</span>
+                    <span class="col-6">{{ comment_form.email | as_crispy_field }}</span>
+                </div>
+                <button class="btn" type="submit">Post Comment</button>
+            </form>
+        </div>
     </div>
-    {{prev_post.title}}--
-    {{next_post.title}}
+    {% comment %} {{ prev_post.title }}--
+    {{ next_post.title }} {% endcomment %}
 {% endblock content %}

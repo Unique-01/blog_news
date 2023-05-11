@@ -6,5 +6,5 @@ def custom_processor(request):
     post_form = PostForm()
     categoryform = CategoryForm()
     general_post = Post.objects.all()
-    return {'categories': categories,'post_form':post_form,'categoryform':categoryform}
+    return {'categories': categories,'post_form':post_form,'categoryform':categoryform,'general_post':general_post}
 

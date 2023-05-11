@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'fontawesomefree',
-    'django_social_share'
+    'django_social_share',
+    'dynamic_breadcrumbs',
 ]
 
 MIDDLEWARE = [
@@ -70,11 +71,14 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'blogapp.context_processors.custom_processor',
+                "dynamic_breadcrumbs.context_processors.breadcrumbs",
                 
             ],
         },
     },
 ]
+
+DYNAMIC_BREADCRUMBS_SHOW_AT_BASE_PATH = True
 
 WSGI_APPLICATION = 'blogapp.wsgi.application'
 

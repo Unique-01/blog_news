@@ -1,0 +1,23 @@
+.bg-1{
+    background-color: #7b2cbf;
+}
+.dark{
+    color: black;
+}
+.top-nav{
+    margin-bottom: 20px;
+}
+.navbar{
+    margin-top: -10px;
+    /* margin-bottom: 100px; */
+}
+a{
+    color: #5a189a;
+    text-decoration: none;
+}
+a:hover,.nav-link:hover{
+    color: #7b2cbf;
+}
+body{
+    /* background-color: #e0aaff; */
+}

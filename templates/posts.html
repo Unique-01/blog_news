@@ -3,7 +3,7 @@
         <img src="{{ post.image.url }}"
              class=""
              width="400"
-             height="250"
+             height="300"
              id="myImg{{ post.id }}"
              alt="{{ post.title|slice:"5" }}">
     {% endif %}
@@ -16,7 +16,7 @@
             {% endif %}
         </small>
         <h3>
-            <a href="{% url 'post_detail' id=post.id slug=post.slug %}">{{ post.title }}</a>
+            <a class="dark" href="{% url 'post_detail' id=post.id slug=post.slug %}">{{ post.title }}</a>
         </h3>
         <span class="text-uppercase"><small class="">by {{ post.author }}</small>
         <small>{{ post.updated |date }}</small></span>
