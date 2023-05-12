@@ -18,7 +18,7 @@
         <h3>
             <a class="dark" href="{% url 'post_detail' id=post.id slug=post.slug %}">{{ post.title }}</a>
         </h3>
-        <span class="text-uppercase"><small class="">by {{ post.author }}</small>
+        <span class="text-uppercase small-text"><small class="">by {{ post.author }}</small>
         <small>{{ post.updated |date }}</small></span>
         <p>
             {{ post.content|safe|truncatechars_html:"100" }}

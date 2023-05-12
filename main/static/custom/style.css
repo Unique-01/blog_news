@@ -18,6 +18,18 @@ a{
 a:hover,.nav-link:hover{
     color: #7b2cbf;
 }
+.active{
+    color: #9d4edd !important; 
+}
+.post-detail-image{
+    max-height: 700px;
+}
+.small-text{
+    font-size: 12px;
+}
+.btn-outline{
+    border: 1px solid #9d4edd;
+}
 body{
     /* background-color: #e0aaff; */
 }

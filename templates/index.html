@@ -9,7 +9,9 @@
                 {% include "posts.html" %}
             {% endfor %}
         </div>
-        <button id="load-more-button">Load More</button>
+        <div class="d-flex justify-content-center">
+            <button id="load-more-button" class=" btn btn-outline">Load More</button>
+        </div>
     </div>
     {{ page_obj.paginator.num_pages |json_script:"last-page" }}
 {% endblock content %}
