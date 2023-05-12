@@ -9,24 +9,34 @@
                 {% include "posts.html" %}
             {% endfor %}
         </div>
-        {% if page_obj.has_next %}<button id="load-more-button">Load More</button>{% endif %}
+        <button id="load-more-button">Load More</button>
     </div>
+    {{ page_obj.paginator.num_pages |json_script:"last-page" }}
 {% endblock content %}
 {% block extra_js %}
     <script>
     $(function () {
         var pageNum = 2; // start with page 2 because page 1 is already displayed
+        const lastPage = JSON.parse(document.getElementById('last-page').textContent);
 
         $('#load-more-button').on('click', function () {
             $.ajax({
                 url: "{% url 'postpagination' %}?page=" + pageNum,
                 success: function (data) {
-                    if ($.trim(data)) {
-                        $('#post-list').append(data);
-                        pageNum++;
+                    if (pageNum <= lastPage) {
+                        if ($.trim(data)) {
+                            $('#post-list').append(data);
+                            pageNum++;
+                        }
+                        if (pageNum > lastPage) {
+                            $('#load-more-button').prop('disabled', true);
+                            console.log($('#load-more-button'));
+                        }
                     } else {
-                        $('#load-more-button').hide();
+                        $('#load-more-button').prop('disabled', true);
+                        console.log($('#load-more-button'));
                     }
+
                 }
             });
         });

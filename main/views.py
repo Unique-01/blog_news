@@ -16,6 +16,7 @@ class HomePage(generic.ListView):
 
 class PostPagination(HomePage):
     template_name = 'postpagination.html'
+    
 
 def get_category_post(request,name):
     category = Category.objects.get(name=name)
