@@ -2,7 +2,9 @@
 {% block title %}{{q}}{% endblock title %}
 {% block content %}
 
-   {% for post in queryset %}
-        {% include "posts.html" %}
-    {% endfor %} 
+   <div class="row gap-5">{% for post in queryset %}
+    {% include "posts.html" %}
+{% empty %}
+<h3>No Search result found</h3>
+{% endfor %} </div>
 {% endblock content %}

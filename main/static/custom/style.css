@@ -29,6 +29,19 @@ a:hover,.nav-link:hover{
 }
 .btn-outline{
     border: 1px solid #9d4edd;
+    color: #7b2cbf;
+}
+.btn-outline:hover{
+    /* border: 1px solid #9d4edd; */
+    background-color: #9d4edd;
+    color: white;
+}
+#load-more-button{
+    /* font-weight: 900; */
+    font-family: cursive;
+    font-size: larger;
+
+    padding: 5 10px;
 }
 body{
     /* background-color: #e0aaff; */

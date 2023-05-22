@@ -128,7 +128,7 @@
                                         <div id="image-preview" class="d-flex justify-content-center"></div>
                                         {{ post_form.media }}
                                         {{ post_form|crispy }}
-                                        <button type="submit" class="btn">Upload</button>
+                                        <button type="submit" class="btn btn-outline">Upload</button>
                                     </form>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                                     {% csrf_token %}
                                     {% comment %} <input type="text"/> {% endcomment %}
                                     {{ categoryform|crispy }}
-                                    <button type="submit" class="btn">Upload</button>
+                                    <button type="submit" class="btn btn-outline">Upload</button>
                                 </form>
                             </div>
                         </div>

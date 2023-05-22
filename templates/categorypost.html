@@ -1,7 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{name}}{% endblock title %}
+{% block title %}
+    {{ name }}
+{% endblock title %}
 {% block content %}
-{% for post in posts %}
-{% include "posts.html" %}
-{% endfor %}
+    <div id="post-list" class="row  gap-5">
+        {% for post in posts %}
+            {% include "posts.html" %}
+        {% endfor %}
+    </div>
 {% endblock content %}

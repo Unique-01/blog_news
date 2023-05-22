@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
     <div class="container mt-4">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="w-50 p-3 shadow">
             {% csrf_token %}
             {% comment %} <div id="image-preview" class="d-flex jus\tify-content-center"></div> {% endcomment %}
             <img {% if post.image %}src="{{ post.image.url }}" height="200" width="200"{% endif %}
@@ -13,7 +13,7 @@
                  id="uploadPreview"/>
             {{ form.media }}
             {{ form|crispy }}
-            <button type="submit">Update</button>
+            <button type="submit" class="btn btn-outline">Update</button>
         </form>
     </div>
     {% block extra_js %}

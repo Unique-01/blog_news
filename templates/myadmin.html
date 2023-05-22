@@ -4,12 +4,42 @@
     Admin Panel
 {% endblock title %}
 {% block content %}
-    {% for post in posts %}
-        {% comment %} {% include "posts.html" %} {% endcomment %}
-        {% if post.status == 1 %}
-            {% include "posts.html" %}
-        {% endif %}
-    {% endfor %}
+    <div>
+        <button class="btn btn-outline"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#draftDiv"
+                aria-expanded="false"
+                aria-controls="commentDiv">
+            Drafts
+        </button>
+        <button class="btn btn-outline"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#publishDiv"
+                aria-expanded="false"
+                aria-controls="commentDiv">
+            Published
+        </button>
+    </div>
+    <div class="collapse" id="publishDiv">
+        <div class="row gap-5">
+            {% for post in posts %}
+                {% if post.status == 1 %}
+                    {% include 'posts.html' %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="collapse" id="draftDiv">
+        <div class="row gap-5">
+            {% for post in posts %}
+                {% if post.status == 0 %}
+                    {% include 'posts.html' %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
     {% comment %} <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}
