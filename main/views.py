@@ -75,9 +75,12 @@ def myAdmin(request):
     form = PostForm()
     categoryform = CategoryForm()
     category = Category.objects.all()
+    past_questions = PastQuestion.objects.all()
+    past_question_form = PastQuestionForm()
     if request.method == 'POST':
         categoryform = CategoryForm(request.POST)
         form = PostForm(request.POST, request.FILES)
+        past_question_form = PastQuestionForm(request.POST,request.FILES)
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.author = request.user
@@ -88,6 +91,11 @@ def myAdmin(request):
         if categoryform.is_valid():
             categoryform.save()
             messages.success(request, "category has been added successfully")
+            return redirect('myadmin')
+
+        if past_question_form.is_valid():
+            past_question_form.save()
+            messages.success(request, "past_question has been uploaded successfully")
             return redirect('myadmin')
 
     context = {'posts': posts, 'form': form,'categoryform':categoryform,'category':category}
@@ -103,3 +111,10 @@ class PostUpdate(generic.UpdateView):
 class PostDelete(generic.DeleteView):
     model =Post
     template_name = 'post_delete.html'
+
+class PastQuestionList(generic.ListView):
+    queryset = PastQuestion.objects.all()
+    template_name = 'past_question_list.html'
+    context_object_name = 'past_questions'
+
+    

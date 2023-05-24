@@ -44,6 +44,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.name}-{self.comment[:10]}'
+
+class PastQuestion(models.Model):
+    description = models.CharField(max_length=200)
+    document = models.FileField(upload_to="past_questions")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.description
+    
     
     
 

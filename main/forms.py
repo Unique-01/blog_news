@@ -1,6 +1,6 @@
 from django import forms
 from ckeditor.widgets import CKEditorWidget
-from .models import Post, Comment,Category
+from .models import Post, Comment,Category,PastQuestion
 
 
 class PostForm(forms.ModelForm):
@@ -39,3 +39,8 @@ class CommentForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'placeholder': "Name"}),
             'email': forms.EmailInput(attrs={'placeholder': 'Email'})
         }
+
+class PastQuestionForm(forms.ModelForm):
+    class Meta:
+        model = PastQuestion
+        fields = ['description','document']
