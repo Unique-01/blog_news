@@ -21,6 +21,14 @@
                 aria-controls="commentDiv">
             Published
         </button>
+        <button class="btn btn-outline"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#pastQuestionDiv"
+                aria-expanded="false"
+                aria-controls="pastQuestionDiv">
+            Past Questions
+        </button>
     </div>
     <div class="collapse" id="publishDiv">
         <div class="row gap-5">
@@ -28,6 +36,16 @@
                 {% if post.status == 1 %}
                     {% include 'posts.html' %}
                 {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="collapse" id="pastQuestionDiv">
+        <div class="">
+            {% for document in past_questions %}
+                <p>
+                    <a href={{ document.document.url }} download>{{ document.description }}
+                    </a>
+                </p>
             {% endfor %}
         </div>
     </div>

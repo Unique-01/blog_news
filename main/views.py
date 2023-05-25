@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .models import Category
 from django.contrib import messages
+import os
 
 
 class HomePage(generic.ListView):
@@ -94,11 +95,14 @@ def myAdmin(request):
             return redirect('myadmin')
 
         if past_question_form.is_valid():
-            past_question_form.save()
+            new_upload = past_question_form.save(commit=False)
+            extension = os.path.splitext(new_upload.document.name)[1]
+            new_upload.document.name = f'{new_upload.description}.{extension}'
+            new_upload.save()
             messages.success(request, "past_question has been uploaded successfully")
             return redirect('myadmin')
 
-    context = {'posts': posts, 'form': form,'categoryform':categoryform,'category':category}
+    context = {'posts': posts, 'form': form,'categoryform':categoryform,'category':category,'past_question_form':past_question_form,'past_questions':past_questions}
     return render(request, 'myadmin.html', context)
 
 
@@ -116,5 +120,10 @@ class PastQuestionList(generic.ListView):
     queryset = PastQuestion.objects.all()
     template_name = 'past_question_list.html'
     context_object_name = 'past_questions'
+
+def past_question_download(request,id):
+    document = get_object_or_404(PastQuestion,id=id)
+
+
 
     

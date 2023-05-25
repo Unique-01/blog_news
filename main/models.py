@@ -47,7 +47,7 @@ class Comment(models.Model):
 
 class PastQuestion(models.Model):
     description = models.CharField(max_length=200)
-    document = models.FileField(upload_to="past_questions")
+    document = models.FileField(upload_to="past_questions/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

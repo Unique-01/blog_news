@@ -69,6 +69,12 @@
                                         data-bs-target="#categoryFormModal">
                                     CREATE CATEGORY
                                 </button>
+                                <button type="button"
+                                        class="btn nav-link "
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#pastQuestionFormModal">
+                                    ADD PAST QUESTIONS
+                                </button>
                                 <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
                             {% endif %}
                             <button type="button"
@@ -148,6 +154,25 @@
                                     {% csrf_token %}
                                     {% comment %} <input type="text"/> {% endcomment %}
                                     {{ categoryform|crispy }}
+                                    <button type="submit" class="btn btn-outline">Upload</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade"
+                     id="pastQuestionFormModal"
+                     tabindex="-1"
+                     aria-labelledby="pastQuestionFormModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+                            <div class="modal-body">
+                                <form action="{% url 'myadmin' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% comment %} <input type="text"/> {% endcomment %}
+                                    {{ past_question_form|crispy }}
                                     <button type="submit" class="btn btn-outline">Upload</button>
                                 </form>
                             </div>
