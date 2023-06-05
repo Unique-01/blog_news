@@ -54,6 +54,11 @@
                                     {{ category.name|upper }}
                                 </a>
                             {% endfor %}
+                            {% url 'past_question_list' as past_question_list %}
+                            <a class="nav-link {% if request.path == past_question_list %}active{% endif %}"
+                                   href="{{ past_question_list }}">
+                                    OAUSTECH PAST QUESTIONS
+                                </a>
                             {% if user.is_superuser %}
                                 <a class="nav-link {% if request.path == myadmin %}active{% endif %}"
                                    href="{{ myadmin }}">ADMIN</a>

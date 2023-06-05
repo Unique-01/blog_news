@@ -20,11 +20,35 @@
                 {% endif %}
                 comments
             </div>
-            {% if post.image %}<img src="{{ post.image.url }}" alt="{{ post.title|slice:'10' }}" class="post-detail-image">{% endif %}
+            {% if post.image %}
+                <img src="{{ post.image.url }}"
+                     alt="{{ post.title|slice:'10' }}"
+                     class="post-detail-image">
+            {% endif %}
             <p>
                 {{ post.content|safe }}
             </p>
         </article>
+        <div>
+            <h4 class="d-flex">
+                {% if prev_post is not None %}
+                    <div class="btn-outline p-2 rounded">
+                        <a class="d-flex align-items-center gap-3 "
+                           href="{% url 'post_detail' id=prev_post.id slug=prev_post.slug %}">
+                            <span>&larrb;</span><span>{{ prev_post.title }}
+                            <br>
+                            <small>previous post</small></span>
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="float-right">
+                    {% if next_post is not None %}
+                        <a class="btn-outline"
+                           href="{% url 'post_detail' id=next_post.id slug=next_post.slug %}">{{ next_post.title }}</a>
+                    {% endif %}
+                </div>
+            </h4>
+        </div>
         <div class="d-flex justify-content-center">
             <button class="btn btn-outline"
                     type="button"
@@ -44,7 +68,8 @@
                     <span class="col-6">{{ comment_form.name | as_crispy_field }}</span>
                     <span class="col-6">{{ comment_form.email | as_crispy_field }}</span>
                 </div>
-                <button class="btn btn-outline type="submit">Post Comment</button>
+                <button class="btn btn-outline type="submit">Post Comment
+                </button>
             </form>
         </div>
     </div>

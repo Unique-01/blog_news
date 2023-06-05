@@ -10,7 +10,7 @@ urlpatterns = [
     path('category/<str:name>/',views.get_category_post,name='categorypost'),
     path('update_post/<slug:slug>/',views.PostUpdate.as_view(),name='post_update'),
     path('delete_post/<slug:slug>/',views.PostDelete.as_view(),name='post_delete'),
-    path('<int:id>/<slug:slug>/',views.post_detail,name='post_detail'),
+    path('<slug:slug>/<int:id>/',views.post_detail,name='post_detail'),
     
     
     # path('', include('social_share.urls')),

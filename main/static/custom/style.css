@@ -22,7 +22,8 @@ a:hover,.nav-link:hover{
     color: #9d4edd !important; 
 }
 .post-detail-image{
-    max-height: 700px;
+    /* max-height: 700px; */
+    max-width: 100%;
 }
 .small-text{
     font-size: 12px;
